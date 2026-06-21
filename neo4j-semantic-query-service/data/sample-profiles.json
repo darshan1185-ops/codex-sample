@@ -1,0 +1,69 @@
+{
+  "profiles": [
+    {
+      "api_id": "payment-approval",
+      "method": "POST",
+      "path": "/v1/payments/{paymentId}/approve",
+      "normalized_path": "/payments/{paymentId}/approve",
+      "semanticProfile": {
+        "domain": "Payments",
+        "businessCapability": "Payment Approval",
+        "entity": "Payment",
+        "action": "Approve",
+        "workflow": "Payment Lifecycle",
+        "workflowStage": "Approval",
+        "operationType": "State Changing",
+        "riskLevel": "High",
+        "dataSensitivity": "High",
+        "criticality": "High",
+        "exposure": "Internal",
+        "dataCategories": ["Financial Data", "Transaction Data"],
+        "compliance": ["AML"],
+        "consumers": ["Treasury Portal"]
+      },
+      "inferred": {
+        "entities": ["Payment", "Monetary Amount"],
+        "containsFinancialData": true,
+        "privilegedOperation": true,
+        "risk": "HIGH"
+      },
+      "dependencies": [
+        {
+          "apiId": "payment-execution",
+          "dependencyType": "Synchronous",
+          "required": true
+        }
+      ],
+      "violated": []
+    },
+    {
+      "api_id": "payment-execution",
+      "method": "POST",
+      "path": "/v1/payments/{paymentId}/execute",
+      "normalized_path": "/payments/{paymentId}/execute",
+      "semanticProfile": {
+        "domain": "Payments",
+        "businessCapability": "Payment Execution",
+        "entity": "Payment",
+        "action": "Execute",
+        "workflow": "Payment Lifecycle",
+        "workflowStage": "Execution",
+        "operationType": "State Changing",
+        "riskLevel": "Critical",
+        "dataSensitivity": "High",
+        "criticality": "Critical",
+        "exposure": "Internal",
+        "dataCategories": ["Financial Data", "Transaction Data"],
+        "compliance": ["AML"],
+        "consumers": ["Payment Approval API"]
+      },
+      "inferred": {
+        "entities": ["Payment", "Monetary Amount"],
+        "containsFinancialData": true,
+        "privilegedOperation": true,
+        "risk": "CRITICAL"
+      },
+      "violated": []
+    }
+  ]
+}
