@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neo4j-semantic-query-service"
+version = "1.0.0"
+description = "Neo4j-backed semantic query service for profiled APIs"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[project.scripts]
+semantic-query = "app.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
